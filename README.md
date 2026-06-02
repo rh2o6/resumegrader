@@ -4,16 +4,25 @@
 
 In your terminal, enter the command 'git clone https://github.com/rh2o6/resumegrader'
 
-# Step 2 - Provide Resume & Job Description
+# Step 2 - Install Dependencies
+
+Once cloned, install the required dependencies with pip: 
+
+```
+pip install -r requirements.txt
+```
+
+# Step 3 - Provide Resume & Job Description
 
 In the same directory upload the your resume as a .pdf file. Also paste the job description into the 'jobdesc.txt' file.
 
-# Step 3 - Run matchJD.py
+# Step 4 - Run matchJD.py
 
 This file provides a report on ur resume vs the job description. Showing an overall job match based on keywords, missing keywords and near misses such as using acronyms instead of full technology names.
 
 Below is an example report:
 
+```
 ======================================================================
 ATS MATCH REPORT
 ======================================================================
@@ -56,3 +65,6 @@ Tokenization Risks
   - JD uses acronym 'AD'. Please add it alongside 'active directory' in resume
 
 ======================================================================
+```
+
+Currently, selfhosted is the only way to run this. Website is under development...
