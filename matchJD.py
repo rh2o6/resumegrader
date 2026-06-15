@@ -7,7 +7,6 @@ from tech_keyword import TECH_KEYWORDS, NEAR_MISS_HINTS
 
 RESUME_PATH = 'robertresumefall.pdf'
 
-# Paste the job description here as a multi-line string
 with open("jobdesc.txt", "r", encoding="utf-8") as f:
     JOB_DESCRIPTION = f.read()
 
@@ -34,7 +33,6 @@ def extract_resume_text(path):
 # ===== 3. TOKENIZATION (mimics ATS behavior) =====
 
 def tokenize(text):
-    """Lowercase, strip punctuation, split on whitespace — same as basic ATS."""
     text = text.lower()
     # Keep alphanumerics, dots (for .net, node.js), pluses (c++), hashes (c#), hyphens
     text = re.sub(r"[^\w\s\.\+\#\-/]", ' ', text)
@@ -45,7 +43,6 @@ def tokenize(text):
 
 
 def extract_phrases(text, max_n=3):
-    """Extract 1-, 2-, and 3-word phrases (n-grams) for compound keyword matching."""
     tokens = tokenize(text)
     phrases = set(tokens)
     for n in range(2, max_n + 1):
@@ -56,10 +53,8 @@ def extract_phrases(text, max_n=3):
 
 # ===== 4. KEYWORD EXTRACTION FROM JD =====
 
-# Curated technical keyword dictionary — extend for your field
 
 def extract_jd_keywords(jd_text):
-    """Find which known tech keywords appear in the JD."""
     jd_phrases = extract_phrases(jd_text, max_n=3)
     found = set()
     for kw in TECH_KEYWORDS:
@@ -69,7 +64,6 @@ def extract_jd_keywords(jd_text):
 
 
 def find_must_haves(jd_text, all_keywords):
-    """Heuristic: keywords mentioned near 'required', 'must', 'minimum'."""
     must_haves = set()
     sentences = re.split(r'[.\n]', jd_text.lower())
     trigger_words = ['required', 'must have', 'must-have', 'minimum',
@@ -83,7 +77,6 @@ def find_must_haves(jd_text, all_keywords):
 
 
 def find_near_misses(missing_keywords, resume_text):
-    """For each missing keyword, check if the resume has a related term."""
     resume_lower = resume_text.lower()
     near_misses = {}
 
@@ -109,7 +102,6 @@ def find_near_misses(missing_keywords, resume_text):
 # ===== 5. MATCHING =====
 
 def match_resume_to_jd(resume_text, jd_text):
-    """Strict ATS-style matching: word-boundary regex, no variants."""
     resume_normalized = re.sub(r'\s+', ' ', resume_text.lower())
     jd_keywords = extract_jd_keywords(jd_text)
     must_haves = find_must_haves(jd_text, jd_keywords)
@@ -144,7 +136,6 @@ def match_resume_to_jd(resume_text, jd_text):
 # ===== 6. TOKENIZATION RISK CHECKS =====
 
 def check_tokenization_risks(resume_text, jd_text):
-    """Flag specific failure modes the Reddit post warned about."""
     warnings = []
 
     # Compound word splits
