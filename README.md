@@ -16,7 +16,13 @@ pip install -r requirements.txt
 
 In the same directory upload the your resume as a .pdf file. Also paste the job description into the 'jobdesc.txt' file.
 
-# Step 4 - Run matchJD.py
+# Step 4 - Install Java for the Apache Tika Parser
+
+Linux - sudo apt update && sudo apt install openjdk-21-jre -y
+
+Windows - winget install EclipseAdoptium.Temurin.21.JRE
+
+# Step 5 - Run matchJD.py
 
 This file provides a report on ur resume vs the job description. Showing an overall job match based on keywords, missing keywords and near misses such as using acronyms instead of full technology names.
 
